@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: dark;
+    /* Evita el "flash" de zoom al tocar dos veces en iOS y hace que los
+       toques se sientan instantáneos en vez de esperar el delay de 300ms. */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  body {
+    @apply bg-ink-950 text-mist-50 antialiased;
+    /* Nunca debería aparecer scroll horizontal — si algún elemento se
+       desborda por error en una pantalla angosta, esto evita que se note. */
+    overflow-x: hidden;
+    /* Respeta el notch/home-indicator de iPhone en vez de que el contenido
+       quede tapado por ellos. */
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Foco de teclado visible en toda la app */
+  :focus-visible {
+    outline: 2px solid theme("colors.amber.400");
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
